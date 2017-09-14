@@ -62,7 +62,7 @@ public class ChapterThree {
             //将一个发送事件的上游Observable变换为多个发送事件的Observables，
             // 然后将它们发射的事件合并后放进一个单独的Observable里,flatMap并不保证事件的顺序.
             @Override
-            public ObservableSource<String> apply(Integer integer) throws Exception {
+            public ObservableSource<String> apply(Integer integer) throws Exception {//无序转换符
                 final List<String> list = new ArrayList<>();
                 for (int i = 0; i < 3; i++) {
                     list.add("I am value " + integer);
@@ -88,7 +88,7 @@ public class ChapterThree {
             //将一个发送事件的上游Observable变换为多个发送事件的Observables，
             // 然后将它们发射的事件合并后放进一个单独的Observable里,concatMap可以保证事件的顺序.
             @Override
-            public ObservableSource<String> apply(Integer integer) throws Exception {
+            public ObservableSource<String> apply(Integer integer) throws Exception {//有序转换符
                 final List<String> list=new ArrayList<String>();
                 for (int i = 0; i < 3; i++) {
                     list.add("I am value " + integer);
@@ -105,9 +105,9 @@ public class ChapterThree {
     public static void practice(final Context context){
         //登录注册嵌套
         final Api api= RetrofitCreate.get().create(Api.class);
-        api.register(new RegisterRequest())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        api.register(new RegisterRequest())//发起注册请求
+                .subscribeOn(Schedulers.io())//在IO线程进行网络请求
+                .observeOn(AndroidSchedulers.mainThread())//回到主线程去处理请求注册结果
                 .doOnNext(new Consumer<RegisterResponse>() {
 
                     @Override
@@ -120,7 +120,7 @@ public class ChapterThree {
             public ObservableSource<LoginResponse> apply(RegisterResponse registerResponse) throws Exception {
                 return api.login(new LoginRequest());
             }
-        }).observeOn(AndroidSchedulers.mainThread())
+        }).observeOn(AndroidSchedulers.mainThread())//回到主线程去处理请求登录的结果
                 .subscribe(new Consumer<LoginResponse>() {
                     @Override
                     public void accept(LoginResponse loginResponse) throws Exception {

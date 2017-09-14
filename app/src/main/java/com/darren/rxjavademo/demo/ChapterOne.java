@@ -155,7 +155,7 @@ public class ChapterOne {
                 Log.d(TAG, "emit 4");
                 emitter.onNext(4);
             }
-        }).subscribe(new Consumer<Integer>() {
+        }).subscribe(new Consumer<Integer>() {//Consumer只关注onNext事件
             @Override
             public void accept(Integer integer) throws Exception {
                 Log.d(TAG, "onNext: " + integer);

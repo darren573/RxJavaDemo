@@ -5,6 +5,7 @@ import com.darren.rxjavademo.entity.LoginResponse;
 import com.darren.rxjavademo.entity.RegisterRequest;
 import com.darren.rxjavademo.entity.RegisterResponse;
 import com.darren.rxjavademo.entity.UserBaseInfoResponse;
+import com.darren.rxjavademo.entity.UserExtraInfoResponse;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -23,5 +24,8 @@ public interface Api {
 
     @GET
     Observable<UserBaseInfoResponse> getUserBaseInfo(@Body UserBaseInfoResponse request);
+
+    @GET
+    Observable<UserExtraInfoResponse> getUserExtrInfo(@Body UserExtraInfoResponse request);
 
 }
